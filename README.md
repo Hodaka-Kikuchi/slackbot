@@ -1,0 +1,1 @@
+slack_bot2.py	C11_SPICEのテキストログファイル最終行を読み取りslackに自動送信。
