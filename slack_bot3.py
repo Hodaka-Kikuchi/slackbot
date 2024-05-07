@@ -39,6 +39,7 @@ def start_sending():
     
     # startボタンを無効にする
     start_button.config(state='disabled')
+    progress_bar.start()
 
 def send_message(webhook_url, file_path):
     global sending_flag, last_modification_time
@@ -60,19 +61,22 @@ def send_message(webhook_url, file_path):
     
     # startボタンを有効にする
     start_button.config(state='normal')
+    progress_bar.stop()
 
 def stop_sending():
     global sending_flag
     sending_flag = False  # 送信フラグをFalseに設定
     sending_status_label.config(text="Sending messages stopped.")
+    progress_bar.stop()
 
 root = tk.Tk()
 root.title("Slack Message Sender")
-root.geometry("400x200")  # ウィンドウの幅と高さを設定
+root.geometry("400x250")  # ウィンドウの幅と高さを設定
 
 # Webhook URL入力用エントリー
 webhook_url_label = ttk.Label(root, text="Webhook URL:")
 webhook_url_label.grid(row=0, column=0, padx=5, pady=5, sticky="e")
+
 
 webhook_url_entry = ttk.Entry(root, width=45)
 webhook_url_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
@@ -95,4 +99,9 @@ start_button.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 sending_status_label = ttk.Label(root, text="")
 sending_status_label.grid(row=4, column=0, columnspan=2, padx=5, pady=5)
 
+# プログレスバー
+progress_bar = ttk.Progressbar(root, orient="horizontal", length=300, mode="indeterminate")
+progress_bar.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+
 root.mainloop()
+# pyinstaller -F --noconsole  --icon=asyura_logo3.ico slack_bot3.py
